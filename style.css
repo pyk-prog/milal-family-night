@@ -185,3 +185,8 @@ header { background:#faf7ef; border-top:4px solid #305845; }
 @media (max-width: 420px) {
   .when time { display: block; }
 }
+
+.header-logos { display:inline-flex; align-items:center; gap:clamp(.65rem, 2vw, 1.25rem); max-width:100%; min-height:48px; }
+.header-logos img { display:block; height:auto; object-fit:contain; }
+.header-logos img:first-child { width:clamp(94px, 22vw, 134px); }
+.header-logos img:last-child { width:clamp(82px, 18vw, 106px); }
