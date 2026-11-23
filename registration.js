@@ -34,8 +34,8 @@ form.addEventListener("change", syncFields);
 window.addEventListener("pageshow", syncFields);
 syncFields();
 
-const startTime = Date.parse("2026-12-08T18:30:00+09:00");
-const endTime = Date.parse("2026-12-08T21:30:00+09:00");
+const startTime = Date.parse("2026-12-08T18:00:00+09:00");
+const endTime = Date.parse("2026-12-08T21:00:00+09:00");
 const clock = document.querySelector("#clock");
 const digits = clock.querySelectorAll("b");
 function renderClock() {
