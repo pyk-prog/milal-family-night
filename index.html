@@ -19,6 +19,15 @@
 <script defer src="./registration.js"></script>
 <script defer src="./winter.js"></script>
 <script defer src="./media.js"></script>
+<style>
+.film-program{display:grid;grid-template-columns:minmax(145px,1fr) minmax(0,2.3fr);align-items:center;gap:clamp(1rem,4vw,3rem);margin-block:2rem 4rem;padding-block:2rem;border-block:1px solid #cbbfae}
+.film-poster img{display:block;width:100%;height:auto;border-radius:8px}
+.film-details h2{margin:.25em 0;word-break:keep-all}.film-details p{word-break:keep-all}
+#trailer-slot{background:#202b26;aspect-ratio:16/9;min-height:200px;border-radius:8px;overflow:hidden}
+#trailer-slot iframe{display:block;width:100%;height:100%;border:0}
+.film-links{display:flex;flex-wrap:wrap;gap:0 1.4rem}.film-links a{display:inline-flex;align-items:center;min-height:48px;text-decoration:underline}
+@media(max-width:640px){.film-program{grid-template-columns:1fr}.film-poster{max-width:210px;margin:auto}}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -50,9 +59,41 @@
 <h2>이날 무엇을 하나요?</h2>
 <div class="program">
 <article><p class="eyebrow">1부</p><h3>개회식과 시상식</h3><p>함께 모여 인사하고 수상자들을 축하해요.</p></article>
-<article><p class="eyebrow">2부</p><h3>함께 영화 보기</h3><p id="movie">함께 볼 영화는 정해지면 알려드려요.</p></article>
+<article><p class="eyebrow">2부</p><h3>함께 영화 보기</h3><p id="movie">옆에서 숨만 쉬어도 좋아</p></article>
 </div>
 </section>
+<section class="wrap film-program" aria-labelledby="film-title">
+<div class="film-poster"><img src="./film-poster.webp" width="773" height="1105" loading="lazy" alt="옆에서 숨만 쉬어도 좋아 영화 포스터"></div>
+<div class="film-details"><p class="eyebrow">2부 · 상영 영화</p><h2 id="film-title">옆에서 숨만 쉬어도 좋아</h2>
+<p>예고편은 소리 없이 시작해요. 소리를 켜거나 잠시 멈출 수 있어요.</p>
+<div id="trailer-slot"></div>
+<div class="film-links"><a href="https://www.youtube.com/watch?v=9AM8FPfwkKU">유튜브에서 예고편 보기</a><a href="https://cgv.co.kr/mShrtU/Yt1Z2mQ7f0">CGV 영화 정보</a></div></div>
+</section>
+<script>
+(() => {
+  const slot = document.getElementById('trailer-slot');
+  function loadTrailer() {
+    const frame = document.createElement('iframe');
+    frame.title = '옆에서 숨만 쉬어도 좋아 예고편';
+    frame.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture';
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.src = 'https://www.youtube.com/embed/9AM8FPfwkKU?autoplay=1&mute=1&playsinline=1&controls=1';
+    slot.replaceChildren(frame);
+  }
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        observer.disconnect();
+        loadTrailer();
+      }
+    }, {threshold: 0.5});
+    observer.observe(slot);
+  } else {
+    loadTrailer();
+  }
+})();
+</script>
 <section class="ticket" id="apply" aria-labelledby="apply-title"><div class="ticket-head"><div><p class="eyebrow">밀알가족의 밤</p><h2 id="apply-title">입장권 신청서</h2><p><span class="phrase">CGV 대전가오</span> · <span class="phrase">패션아일랜드 4층</span></p></div><div class="stub"><strong>12.08</strong><span>화요일</span><span>저녁 6시</span><i aria-hidden="true"></i></div></div><div class="ticket-body"><p id="notice">올해 이용자를 먼저 선정해요. 12월 3일(목)에 밴드와 홈페이지에서 선정 결과를 확인할 수 있어요.<br>개별 문자도 보내드립니다.</p><form id="form-area" method="post" action="https://docs.google.com/forms/d/e/1FAIpQLSfbPXHgrAnpJnj77g9psraNRPGkMZUX_kT_nBM9PHZuruNJgg/formResponse"><input type="hidden" name="pageHistory" value="0"><input type="hidden" name="continue" value="1"><section class="fields"><h3>이용자 정보</h3><label class="field">1. 이용자 이름 (필수)<small></small><input type="text" name="entry.530636444" required></label><label class="field">2. 이용자 장애유형 (필수)<small>해당 없는 경우 ‘비장애’ 또는 ‘해당없음’이라고 표기바랍니다.</small><input type="text" name="entry.1333711119" required></label><label class="field">3. 이용자 생년월일 (필수)<small>예시) 1900.00.00 (동명이인 확인을 위함입니다. 정확하게 기재해주세요.)</small><input type="text" name="entry.592174419" required></label><label class="field">4. 이용자 연락처 (필수)<small>예시) 010-0000-0000 · 선정 결과, 기타 안내 사항을 받기 위한 연락처입니다.<br>잘못된 기재로 인한 불이익은 책임지지 않습니다.<br>문자 받을 번호를 한 번 더 확인해 주세요.</small><input type="tel" name="entry.850321320" required></label><fieldset><legend>5. 올해(2026년) 복지관 이용경험 (필수)</legend><label class="choice"><input type="radio" name="entry.1693191217" value="있다" required>있다</label><label class="choice"><input type="radio" name="entry.1693191217" value="없다" required>없다</label><label class="choice"><input type="radio" name="entry.1693191217" value="과거(~2025년) 이용경험이 있다(*선정시 우선순위에서 제외될 수 있습니다.)" required>과거(~2025년) 이용경험이 있다(*선정시 우선순위에서 제외될 수 있습니다.)</label></fieldset></section><section class="fields"><h3>참석 인원</h3><fieldset><legend>6. 참석인원 (필수)</legend><label class="choice"><input type="radio" name="entry.1695488251" value="1명" required>1명</label><label class="choice"><input type="radio" name="entry.1695488251" value="2명" required>2명</label></fieldset><p>세 분이 함께 오려면 복지관으로 전화해 주세요.</p><div id="companion"><fieldset><legend>6-1. 참석자(동행인 참석 여부) · 참석자에 모두 체크해 주세요. (최대 2명)</legend><label class="choice"><input type="checkbox" name="entry.256684460" value="본인">본인</label><label class="choice"><input type="checkbox" name="entry.256684460" value="가족">가족</label><label class="choice"><input type="checkbox" name="entry.256684460" value="활동지원사">활동지원사</label></fieldset><label class="field">6-2. 동행인 성명 및 관계 (선택)<small>예시1) 홍길동, 아버지 · 예시2) 김선녀, 활동지원사</small><input type="text" name="entry.2104585" ></label><label class="field">6-3. 동행인 연락처 (선택)<small>예시) 010-0000-0000 · 선정 결과, 기타 안내 사항을 받기 위한 연락처입니다.<br>잘못된 기재로 인한 불이익은 책임지지 않습니다.</small><input type="tel" name="entry.1223029764" ></label></div></section><section class="fields"><h3>편의지원과 작성자</h3><fieldset><legend>7. 편의제공 선택 (선택)</legend><label class="choice"><input type="radio" name="entry.1217678221" value="휠체어석 희망" >휠체어석 희망</label><label class="choice"><input type="radio" name="entry.1217678221" value="수어통역 지원(본 행사 1부에 한하여 제공 / 영화 상영시 지원 불가)" >수어통역 지원(본 행사 1부에 한하여 제공 / 영화 상영시 지원 불가)</label><label class="choice"><input type="radio" name="entry.1217678221" value="__other_option__">기타</label><label class="field">기타 내용<input name="entry.1217678221.other_option_response" data-other="entry.1217678221" disabled></label></fieldset><p>상영관 내 휠체어석 선택 시 원활한 입·퇴장을 위하여 부득이하게 앞 좌석에 배치될 수 있으니,<br>양해 부탁드립니다. 수어통역 지원은 접수 결과에 따라 변경될 수 있습니다.<br>기타 사항 요청 시 상황에 따라 제공이 어려울 수 있습니다.</p><fieldset><legend>신청서 작성자 (신청 관련 추가 확인 필요시 연락하기 위함입니다.) (필수)</legend><label class="choice"><input type="radio" name="entry.705090233" value="본인(이용자)" required>본인(이용자)</label><label class="choice"><input type="radio" name="entry.705090233" value="동행인(가족 또는 활동지원사)" required>동행인(가족 또는 활동지원사)</label><label class="choice"><input type="radio" name="entry.705090233" value="__other_option__">기타</label><label class="field">기타 내용<input name="entry.705090233.other_option_response" data-other="entry.705090233" disabled></label></fieldset></section><section id="car-arrival" class="fields" hidden>
 <h3>주차 안내</h3>
 <fieldset><legend>차를 타고 오시나요?</legend>
